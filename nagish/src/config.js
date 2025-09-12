@@ -1,0 +1,2 @@
+// src/config.js
+export const API_BASE_URL = "https://indian-nagish-app-1.onrender.com/api";

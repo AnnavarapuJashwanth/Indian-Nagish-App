@@ -1,12 +1,12 @@
 // services/sttService.js
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// Use environment variable if available, otherwise fallback to localhost
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://indian-nagish-app-1.onrender.com/api';
 
 // Function to convert speech to text using the browser's Web Speech API
 export const sendVoiceToText = (language = 'en') => {
   return new Promise((resolve, reject) => {
-    // Check if browser supports Web Speech API
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       reject(new Error('Speech recognition is not supported in this browser'));
       return;
@@ -20,22 +20,16 @@ export const sendVoiceToText = (language = 'en') => {
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
-    recognition.onstart = () => {
-      console.log('Voice recognition started');
-    };
+    recognition.onstart = () => console.log('Voice recognition started');
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       resolve(transcript);
     };
 
-    recognition.onerror = (event) => {
-      reject(new Error(`Speech recognition error: ${event.error}`));
-    };
+    recognition.onerror = (event) => reject(new Error(`Speech recognition error: ${event.error}`));
 
-    recognition.onend = () => {
-      console.log('Voice recognition ended');
-    };
+    recognition.onend = () => console.log('Voice recognition ended');
 
     recognition.start();
   });
@@ -46,31 +40,19 @@ export const convertSpeechToText = async (audioData, language = 'en') => {
   try {
     console.log('Audio conversion requested for language:', language);
     console.log('Audio data length:', audioData.length);
-    
-    // Try to call the actual backend API
-    try {
-      const response = await axios.post(`${API_BASE_URL}/stt/transcribe`, {
-        audio: audioData,
-        language: language,
-        sampleRate: 16000
-      });
-      
-      return response.data;
-    } catch (apiError) {
-      console.error('API Error, using mock data:', apiError);
-      
-      // Fallback to mock data if API fails
-      return getMockResponse(language, audioData.length);
-    }
-  } catch (error) {
-    console.error('Error converting speech to text:', error);
-    
-    // Return error message
-    return {
-      success: false,
-      text: `Error: ${error.message}. Please try again with a different audio file.`,
-      language: language
-    };
+
+    const response = await axios.post(`${API_BASE_URL}/stt/transcribe`, {
+      audio: audioData,
+      language,
+      sampleRate: 16000
+    });
+
+    return response.data;
+  } catch (apiError) {
+    console.error('API Error, using mock data:', apiError);
+
+    // Fallback to mock response if API fails
+    return getMockResponse(language, audioData.length);
   }
 };
 
@@ -96,7 +78,7 @@ export const getAudioDuration = (file) => {
     });
     
     audio.addEventListener('error', () => {
-      resolve(0); // Fallback if we can't get duration
+      resolve(0);
       URL.revokeObjectURL(audio.src);
     });
   });
@@ -104,10 +86,8 @@ export const getAudioDuration = (file) => {
 
 // Helper function for mock responses
 const getMockResponse = (language, dataLength) => {
-  // Simulate API delay based on file size
   const delay = Math.min(2000 + (dataLength / 5000), 4000);
-  
-  // Mock responses for different languages
+
   const mockResponses = {
     'en': [
       "Hello, this is a demonstration of voice to text conversion technology.",
@@ -135,7 +115,7 @@ const getMockResponse = (language, dataLength) => {
       "నాగిష్ ఇండియాకు స్వాగతం, భారతీయ భాషలకు మీ స్పీచ్ యాక్సెసిబిలిటీ ప్లాట్‌ఫార్మ్.",
       "ఇది వాయిస్ రికగ్నిషన్ సిస్టమ్ యొక్క పరీక్ష.",
       "భారతదేశం ఒక వివిధతలు కలిగిన దేశం, ఇక్కడ అనేక భాషలు మరియు సంస్కృతులు ఏకమైయి ఉంటాయి.",
-      "స्पీచ్ రికగ్నిషన్ టెక్నాలజీ ప్రతి ఒక్కరికీ కమ్యూనికేషన్ అడ్డంకులను తొలగించడంలో సహాయపడుతుంది."
+      "స్పీచ్ రికగ్నిషన్ టెక్నాలజీ ప్రతి ఒక్కరికీ కమ్యూనికేషన్ అడ్డంకులను తొలగించడంలో సహాయపడుతుంది."
     ],
     'bn': [
       "হ্যালো, এটি ভয়েস টু টেক্সট রূপান্তর প্রযুক্তির একটি প্রদর্শনী।",
@@ -145,16 +125,14 @@ const getMockResponse = (language, dataLength) => {
       "ভয়েস recognition প্রযুক্তি সবার জন্য যোগাযোগের বাধা ভাঙতে সাহায্য করে।"
     ]
   };
-  
-  // Get a random response from the array for the selected language
+
   const responses = mockResponses[language] || mockResponses['en'];
   const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-  
-  // Return mock response based on selected language
+
   return { 
     success: true,
     text: randomResponse,
-    language: language,
+    language,
     duration: `${(delay / 1000).toFixed(1)} seconds`
   };
 };
