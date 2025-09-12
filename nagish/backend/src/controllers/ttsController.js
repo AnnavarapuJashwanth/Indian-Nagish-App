@@ -10,23 +10,19 @@ export const textToSpeechHandler = async (req, res) => {
       return res.status(400).json({ error: "Text is required" });
     }
 
-    const request = {
+    const [response] = await client.synthesizeSpeech({
       input: { text },
       voice: { languageCode, ssmlGender: "NEUTRAL" },
       audioConfig: { audioEncoding: "MP3" },
-    };
+    });
 
-    const [response] = await client.synthesizeSpeech(request);
-
-    // Convert base64 → Buffer
     const audioBuffer = Buffer.from(response.audioContent, "base64");
 
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Content-Disposition", "attachment; filename=output.mp3");
-
     return res.send(audioBuffer);
   } catch (error) {
     console.error("🛑 TTS error:", error);
-    res.status(500).json({ error: "Text-to-Speech failed" });
+    res.status(500).json({ error: "Text-to-Speech failed", message: error.message });
   }
 };

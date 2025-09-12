@@ -30,5 +30,8 @@ app.use("/api/translate", translateRoutes);
 app.get("/", (req, res) => {
   res.send("🌍 API is running! Use /api/stt, /api/tts, or /api/translate");
 });
+app.get("/api", (req, res) => {
+  res.send("🌍 API is running! Available endpoints: /api/stt, /api/tts, /api/translate");
+});
 
 export default app;
