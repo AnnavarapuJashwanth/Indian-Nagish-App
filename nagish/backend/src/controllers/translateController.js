@@ -20,6 +20,6 @@ export const translateText = async (req, res) => {
     res.json({ translatedText: response.translations[0].translatedText });
   } catch (error) {
     console.error("🛑 Translation error:", error);
-    res.status(500).json({ error: "Translation failed" });
+    res.status(500).json({ error: "Translation failed", message: error.message });
   }
 };
