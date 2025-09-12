@@ -1,10 +1,13 @@
 {
-  "name": "backend",
+  "name": "nagish-backend",
   "version": "1.0.0",
+  "description": "Backend for Nagish India - Speech to Text and Text to Speech API",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "render-build": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,5 +24,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
-  }
+  },
+  "keywords": [
+    "speech-to-text",
+    "text-to-speech",
+    "indian-languages",
+    "accessibility"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
 }
