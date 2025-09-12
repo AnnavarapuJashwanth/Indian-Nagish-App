@@ -1,0 +1,46 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Define color palette inspired by Nagish */
+:root {
+  --primary-blue: #0052cc;
+  --accent-yellow: #ffab00;
+  --light-bg: #f8f9fa;
+  --dark-text: #343a40;
+  --light-text: #6c757d;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  --border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--light-bg);
+  color: var(--dark-text);
+}
+
+/* Custom Button Styles */
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  border-radius: 50px !important;
+  padding: 12px 28px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 82, 204, 0.3) !important;
+}
+
+/* General Card Styling */
+.card {
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--card-shadow) !important;
+}

@@ -1,0 +1,99 @@
+/* components/Navbar.css */
+.custom-navbar {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.8rem 0;
+  transition: all 0.3s ease;
+  z-index: 1030;
+}
+
+.custom-navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary) !important;
+  text-decoration: none;
+}
+
+.brand-icon {
+  margin-right: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.brand-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.custom-navbar .nav-link {
+  color: var(--dark) !important;
+  font-weight: 500;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem !important;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.custom-navbar .nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gradient);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.custom-navbar .nav-link:hover::before,
+.custom-navbar .nav-link.active::before {
+  width: 70%;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+  color: var(--primary) !important;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(74, 58, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991px) {
+  .custom-navbar {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  
+  .custom-navbar .navbar-collapse {
+    padding: 1rem 0;
+  }
+  
+  .custom-navbar .nav-link {
+    margin: 0.25rem 0;
+    text-align: center;
+  }
+  
+  .custom-navbar .nav-link::before {
+    display: none;
+  }
+}
