@@ -12,8 +12,8 @@ connectDB();
 // ✅ CORS setup
 app.use(cors({
   origin: [
-    "http://localhost:5173",                // local Vite dev
-    "https://nagishapp4297.netlify.app/" // deployed frontend on Netlify
+    "http://localhost:5173",            // local Vite dev
+    "https://nagishapp4297.netlify.app" // deployed frontend on Netlify
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true

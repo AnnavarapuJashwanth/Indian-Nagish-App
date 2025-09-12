@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "./config";
 
-const API_URL = `${API_BASE_URL}/tts`;  // <-- update endpoint
+const API_URL = `${API_BASE_URL}/tts`;
 
 export const convertTextToSpeech = async (text, languageCode = "en-IN") => {
   try {
@@ -9,7 +9,7 @@ export const convertTextToSpeech = async (text, languageCode = "en-IN") => {
     const audioBlob = new Blob([res.data], { type: "audio/mpeg" });
     return URL.createObjectURL(audioBlob);
   } catch (err) {
-    console.error("TTS API error:", err);
+    console.error("TTS API error:", err.response?.data || err.message);
     throw err;
   }
 };
