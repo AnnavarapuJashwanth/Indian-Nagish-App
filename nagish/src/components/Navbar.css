@@ -1,99 +1,114 @@
-/* components/Navbar.css */
-.custom-navbar {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 0.8rem 0;
-  transition: all 0.3s ease;
-  z-index: 1030;
+/* Navbar.css */
+.ni-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: hsl(0,0%,100%,0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid hsl(0,0%,92%);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
-.custom-navbar.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0;
+.ni-nav--scrolled {
+  background: hsl(0,0%,100%,0.97);
+  box-shadow: 0 2px 16px hsl(220,20%,50%,0.1);
 }
 
-.navbar-brand {
+.ni-nav__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
   display: flex;
   align-items: center;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--primary) !important;
+  gap: 40px;
+}
+
+/* Logo */
+.ni-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
+  flex-shrink: 0;
+}
+.ni-nav__logo-icon { font-size: 1.4rem; }
+.ni-nav__logo-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: hsl(220,25%,14%);
+  letter-spacing: -0.3px;
 }
 
-.brand-icon {
-  margin-right: 0.5rem;
-  font-size: 1.8rem;
+/* Desktop nav */
+.ni-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
 }
 
-.brand-text {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.custom-navbar .nav-link {
-  color: var(--dark) !important;
+.ni-nav__link {
+  text-decoration: none;
+  font-size: 0.88rem;
   font-weight: 500;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem !important;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  position: relative;
+  color: hsl(220,15%,40%);
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
+.ni-nav__link:hover         { color: hsl(220,25%,12%); background: hsl(220,15%,96%); }
+.ni-nav__link--active       { color: hsl(22,100%,52%); font-weight: 600; }
 
-.custom-navbar .nav-link::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: var(--gradient);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-}
-
-.custom-navbar .nav-link:hover::before,
-.custom-navbar .nav-link.active::before {
-  width: 70%;
-}
-
-.custom-navbar .nav-link:hover,
-.custom-navbar .nav-link.active {
-  color: var(--primary) !important;
-}
-
-.navbar-toggler {
+/* Hamburger */
+.ni-nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
   border: none;
-  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: auto;
+}
+.ni-nav__burger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: hsl(220,25%,20%);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.ni-nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.ni-nav__burger.open span:nth-child(2) { opacity: 0; }
+.ni-nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu */
+.ni-nav__mobile {
+  display: flex;
+  flex-direction: column;
+  background: hsl(0,0%,100%);
+  border-top: 1px solid hsl(220,15%,93%);
+  padding: 12px 24px 20px;
+  gap: 4px;
+}
+.ni-nav__mobile-link {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: hsl(220,15%,35%);
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.ni-nav__mobile-link:hover,
+.ni-nav__mobile-link.active {
+  color: hsl(22,100%,52%);
+  background: hsl(22,100%,97%);
 }
 
-.navbar-toggler:focus {
-  box-shadow: none;
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(74, 58, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
-@media (max-width: 991px) {
-  .custom-navbar {
-    background: rgba(255, 255, 255, 0.95);
-  }
-  
-  .custom-navbar .navbar-collapse {
-    padding: 1rem 0;
-  }
-  
-  .custom-navbar .nav-link {
-    margin: 0.25rem 0;
-    text-align: center;
-  }
-  
-  .custom-navbar .nav-link::before {
-    display: none;
-  }
+@media (max-width: 768px) {
+  .ni-nav__links  { display: none; }
+  .ni-nav__burger { display: flex; }
 }

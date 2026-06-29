@@ -1,87 +1,74 @@
 // components/Navbar.jsx
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
 import './Navbar.css';
 
+const NAV_LINKS = [
+  { to: '/stt',      label: 'Voice to Text' },
+  { to: '/tts',      label: 'Text to Voice' },
+  { to: '/settings', label: 'Language Translation' },
+];
+
 function AppNavbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
-      setScrolled(isScrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const closeNavbar = () => setExpanded(false);
-
   return (
-    <Navbar 
-      expand="lg" 
-      fixed="top" 
-      expanded={expanded}
-      onToggle={setExpanded}
-      className={`custom-navbar ${scrolled ? 'scrolled' : ''}`}
-    >
-      <Container>
-        <Navbar.Brand 
-          as={Link} 
-          to="/" 
-          className="navbar-brand"
-          onClick={closeNavbar}
+    <header className={`ni-nav ${scrolled ? 'ni-nav--scrolled' : ''}`}>
+      <div className="ni-nav__inner">
+
+        {/* Logo */}
+        <Link to="/" className="ni-nav__logo" onClick={() => setMenuOpen(false)}>
+          <span className="ni-nav__logo-icon">🇮🇳</span>
+          <span className="ni-nav__logo-text">Nagish India</span>
+        </Link>
+
+        {/* Desktop links */}
+        <nav className="ni-nav__links">
+          {NAV_LINKS.map(l => (
+            <Link
+              key={l.to}
+              to={l.to}
+              className={`ni-nav__link ${location.pathname === l.to ? 'ni-nav__link--active' : ''}`}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Hamburger */}
+        <button
+          className={`ni-nav__burger ${menuOpen ? 'open' : ''}`}
+          onClick={() => setMenuOpen(p => !p)}
+          aria-label="Toggle menu"
         >
-          <span className="brand-icon">🇮🇳</span>
-          <span className="brand-text">Nagish India</span>
-        </Navbar.Brand>
-        
-        <Navbar.Toggle aria-controls="basic-navbar-nav">
-          <span className="navbar-toggler-icon"></span>
-        </Navbar.Toggle>
-        
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link 
-              as={Link} 
-              to="/" 
-              className={location.pathname === '/' ? 'active' : ''}
-              onClick={closeNavbar}
+          <span /><span /><span />
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="ni-nav__mobile">
+          {NAV_LINKS.map(l => (
+            <Link
+              key={l.to}
+              to={l.to}
+              className={`ni-nav__mobile-link ${location.pathname === l.to ? 'active' : ''}`}
+              onClick={() => setMenuOpen(false)}
             >
-              Home
-            </Nav.Link>
-            <Nav.Link 
-              as={Link} 
-              to="/stt" 
-              className={location.pathname === '/stt' ? 'active' : ''}
-              onClick={closeNavbar}
-            >
-              Voice → Text
-            </Nav.Link>
-            <Nav.Link 
-              as={Link} 
-              to="/tts" 
-              className={location.pathname === '/tts' ? 'active' : ''}
-              onClick={closeNavbar}
-            >
-              Text → Voice
-            </Nav.Link>
-            <Nav.Link 
-              as={Link} 
-              to="/settings" 
-              className={location.pathname === '/settings' ? 'active' : ''}
-              onClick={closeNavbar}
-            >
-              Translation
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </header>
   );
 }
 

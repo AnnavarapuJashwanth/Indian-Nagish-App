@@ -1,6 +1,11 @@
 import textToSpeech from "@google-cloud/text-to-speech";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const client = new textToSpeech.TextToSpeechClient();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const keyFilename = path.resolve(__dirname, "../../keys/google.json");
+
+const client = new textToSpeech.TextToSpeechClient({ keyFilename });
 
 export const textToSpeechHandler = async (req, res) => {
   try {

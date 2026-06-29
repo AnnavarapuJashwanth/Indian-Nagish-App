@@ -1,8 +1,13 @@
 // backend/controllers/sttController.js
 import speech from "@google-cloud/speech";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const keyFilename = path.resolve(__dirname, "../../keys/google.json");
 
 // Create Google Cloud client
-const client = new speech.SpeechClient();
+const client = new speech.SpeechClient({ keyFilename });
 
 // Export the function with the correct name that matches your import
 export const speechToText = async (req, res) => {

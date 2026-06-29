@@ -9,6 +9,7 @@ __pycache__/
 *.sqlite3
 *.log
 keys/*.json
+backend/keys/
 # Ignore secrets
 nagish/backend/keys/google.json
 

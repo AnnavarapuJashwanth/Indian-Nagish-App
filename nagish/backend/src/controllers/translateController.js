@@ -1,6 +1,11 @@
 import { TranslationServiceClient } from "@google-cloud/translate";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const translateClient = new TranslationServiceClient();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const keyFilename = path.resolve(__dirname, "../../keys/google.json");
+
+const translateClient = new TranslationServiceClient({ keyFilename });
 
 export const translateText = async (req, res) => {
   try {
