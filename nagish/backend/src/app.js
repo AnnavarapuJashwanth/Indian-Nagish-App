@@ -16,6 +16,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",            // Local Vite dev
+      "http://localhost:5174",            // Local Vite dev (alt port)
+      "http://localhost:5175",            // Local Vite dev (alt port)
       "https://nagishapp4297.netlify.app" // Deployed frontend on Netlify
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
